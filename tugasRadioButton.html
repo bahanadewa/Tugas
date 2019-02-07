@@ -1,0 +1,136 @@
+.<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tugas Radio Box</title>
+</head>
+<style>
+    table, th, td,tr {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 10px;
+                margin: 100x}
+    </style>
+<body>
+    <center>
+        <h1> Daftar Manusia </h1>
+        <table>
+           <thead>
+               <tr>
+                <td>
+                    <input type="text" placeholder="Masukan Nama" style="font-size: 12px ; margin: 5px" > 
+                    <br>
+                    <input type="number" placeholder="Masukan Umur" style="font-size: 12px ; margin: 5px"> 
+                    <br>
+                    <h style="font-size :13px"><center>Jenis Kelamin</center> </h>
+                        <div>
+                            <center>
+                            <input type="radio" id="pria" name="sex" value="P"> Pria 
+                            <input type="radio" id="wanita" name="sex" value="W" checked> Wanita  
+                            </center>
+                        </div>
+                    <input type="text" placeholder="Pekerjaan" style="font-size: 12px ; margin: 5px" > 
+                    <br>
+                    <input type="button" value="Submit" onclick="tambahData()">
+                </td>    
+                </tr>
+            </thead>   
+        </table>
+        <br>
+        <table>
+                <tr>
+                        <td><input type="text" placeholder="Filter By Nama"> </td>
+                        <td><input type="text" placeholder="Filter By Umur"></td>
+                        <td><input type="text" placeholder="Filter By Pekerjaan"></td>
+                        <td><input type="button" value="Filter" onclick="filterNama()"></td>
+                </tr>
+            <tfoot id="idShow"> </tfoot>
+        </table>
+        <h1></h1>
+    </center>
+
+
+
+
+<script>
+
+var data = []
+    class Orang{
+        constructor(nama,umur,jenisKelamin,pekerjaan){
+            this.nama = nama;
+            this.usia = umur;
+            this.jenisKelamin = jenisKelamin;
+            this.pekerjaan = pekerjaan;
+        }
+    }
+
+function tambahData(){
+    var selector = document.getElementsByTagName('input')
+    var nama = selector[0].value
+    var umur = selector[1].value
+    var pekerjaan = selector[4].value
+        /* ============================== ALERT ================================= */
+    if(nama == ''){
+        document.getElementsByTagName('h1')[1].style.color = 'red'
+        document.getElementsByTagName('h1')[1].innerHTML = 'Tidak boleh kosong'
+    }else if (umur==''){
+        document.getElementsByTagName('h1')[1].style.color = 'red'
+        document.getElementsByTagName('h1')[1].innerHTML = 'Umur Harus Di isi'
+    }else if (pekerjaan==''){
+        document.getElementsByTagName('h1')[1].style.color = 'red'
+        document.getElementsByTagName('h1')[1].innerHTML = 'Pekerjaan Harus Di isi'
+    }else{
+        document.getElementsByTagName('h1')[1].innerHTML = ''
+        /* ========================= Radio Button Check =========================== */
+        var sex
+        if (document.getElementById('pria').checked){
+            sex = document.getElementById('pria').value
+        } else if (document.getElementById('wanita').checked){
+            sex = document.getElementById('wanita').value
+        }
+        /* ========================= Push ke Class ========================== */      
+        var newManusia = new Orang(nama,umur,sex,pekerjaan)
+        data.push(newManusia)
+        tampilData(data)
+        for(var i = 0; i <4 ; i++){
+            selektor[i].value = ''
+        }
+    }
+
+}
+
+
+    function tampilData(a){
+        var tampil = ''
+        for(var i =0 ; i <a.length;i++){
+            tampil += 
+                        `<tr>
+                        <td>${a[i].nama}</td>
+                        <td>${a[i].usia}</td>
+                        <td>${a[i].jenisKelamin}</td>
+                        <td>${a[i].pekerjaan}</td> 
+                        </tr>`
+        }
+        document.getElementById('idShow').innerHTML = tampil
+    }
+
+    function filterNama(){
+        var inputUser = document.getElementsByTagName('input')[6].value 
+        var inputUmur = document.getElementsByTagName('input')[7].value
+        var inputJenisKelamin = document.getElementsByTagName('input')[8].value
+
+
+        var newData = []
+        for(var i = 0 ; i < data.length ; i++){
+            if(data[i].nama.includes(inputUser) && data[i].usia.includes(inputUmur) && data[i].jenisKelamin.includes(inputJenisKelamin)){
+                newData.push(data[i])
+            } 
+        }
+        tampilData(newData)
+    }
+</script>
+
+</body>
+</html>
